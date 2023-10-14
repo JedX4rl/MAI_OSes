@@ -36,7 +36,13 @@ int main(int argc, char* argv[])
     
     while (fread(&ch, sizeof(char), 1, file_in) == 1)
     {
-        fwrite(&ch, sizeof(char), 1, file_out);
+        if (fwrite(&ch, sizeof(char), 1, file_out) != 1)
+        {
+            printf("Writing error occured\n");
+            fclose(file_in);
+            fclose(file_out);
+            return NOT_OK;
+        }
     }
     fclose(file_in);
     fclose(file_out);
